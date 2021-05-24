@@ -1,6 +1,6 @@
 # Valgrind Task Integration
 
-Integrate valgrind into the default task / launch.json workflow in vscode!
+Integrate valgrind into the default tasks / launch.json workflow in vscode!
 
 ## Features
 
