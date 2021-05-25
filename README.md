@@ -8,6 +8,13 @@ The extension provides commands and tasks that can be used to automate valgrind 
 Unfortunately valgrind does not exactly fit the VSCode worklflow, but this extension tries it's best to make it fit.
 The extension is not as fully featured as other cpp extensions (such as cmake tools), but basic valgrind support is implemented.
 
+## Prerequisites
+
+- `valgrind` must be installed. For linux users, use `sudo apt-get install valgrind`
+- the extension `cmake tools` is required for:
+  - commands `valgrind-task-integration.valgrindPid` and `valgrind-task-integration.valgrindGdbArg`
+  - the default tasks `valgrind` and `valgrind-debug`
+
 ## Commands
 
 This extension provides the following commands to be used in tasks and launch configs in the default format `${command:[COMMAND_NAME]}`:
@@ -29,43 +36,94 @@ Both tasks support the following definition parameters:
 
 ## Problem matchers
 
-`valgrind` is a problem matcher that scans the default valgrind output.
+`valgrind` (`$valgrind`) is a problem matcher that scans the default valgrind output.
+
+`valgrind-debug` (`$valgrind-debug`) is a problem matcher that scans the default valgrind debugging output.
 
 ## Examples
 
 A basic example for a launch config in combination with the extension Cmake Tools:
 
 ```json
- {
-      "name": "Launch Debugger with valgrind",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${command:cmake.launchTargetPath}",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [
-        {
-          "name": "PATH",
-          "value": "$PATH:${command:cmake.launchTargetDirectory}"
-        }
-      ],
-      "externalConsole": true,
-      "MIMode": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        },
-        {
-          "description": "Connect to valgrind",
-          "text": "${command:valgrind-task-integration.valgrindGdbArg}",
-          "ignoreFailures": true
-        }
-      ]
+{
+  "name": "Launch Debugger with valgrind",
+  "type": "cppdbg",
+  "request": "launch",
+  "program": "${command:cmake.launchTargetPath}",
+  "args": [],
+  "stopAtEntry": false,
+  "cwd": "${workspaceFolder}",
+  "environment": [
+    {
+      "name": "PATH",
+      "value": "$PATH:${command:cmake.launchTargetDirectory}"
     }
+  ],
+  "externalConsole": true,
+  "MIMode": "gdb",
+  "setupCommands": [
+    {
+      "description": "Enable pretty-printing for gdb",
+      "text": "-enable-pretty-printing",
+      "ignoreFailures": true
+    },
+    {
+      "description": "Connect to valgrind",
+      "text": "${command:valgrind-task-integration.valgrindGdbArg}",
+      "ignoreFailures": true
+    }
+  ]
+}
 ```
+
+If only one instance of valgrind is used, the config can also be made more configurable by using the valgrind task in your `lauch.json`:
+
+```json
+{
+  "name": "Launch Debugger with valgrind",
+  "type": "cppdbg",
+  "request": "launch",
+  "program": "${command:cmake.launchTargetPath}",
+  "preLaunchTask": "valgrind-debug",
+  "args": [],
+  "stopAtEntry": false,
+  "cwd": "${workspaceFolder}",
+  "environment": [
+    {
+      "name": "PATH",
+      "value": "$PATH:${command:cmake.launchTargetDirectory}"
+    }
+  ],
+  "externalConsole": true,
+  "MIMode": "gdb",
+  "setupCommands": [
+    {
+      "description": "Enable pretty-printing for gdb",
+      "text": "-enable-pretty-printing",
+      "ignoreFailures": true
+    },
+    {
+      "description": "Connect to valgrind",
+      "text": "target remote | vgdb",
+      "ignoreFailures": true
+    }
+  ]
+}
+```
+
+The task can additionally be configured freely in the `tasks.json`:
+
+```json
+{
+  "label": "valgrind-debug: custom", // Use "preLaunchTask": "valgrind-debug: custom" in yout launch.json
+  "type": "valgrind-debug",
+  "target": "${command:cmake.launchTargetPath}",
+  "valgrind": {
+    "args": ["-v"]
+  }
+}
+```
+
 
 ## Known issues
 

@@ -1,9 +1,9 @@
 import { commands } from 'vscode';
-import { ValgrindTaskProvider } from '../tasks/ValgrindTaskProvider';
 import { ValgrindCommandProvider } from '../commands/ValgrindCommandProvider';
+import { ValgrindDebugTaskProvider } from '../tasks/ValgrindDebugTaskProvider';
 
-export default function contributeCommands(valgrindTaskProvider: ValgrindTaskProvider) {
-  const commandProvider = new ValgrindCommandProvider(valgrindTaskProvider);
+export default function contributeCommands(valgrindDebugTaskProvider: ValgrindDebugTaskProvider) {
+  const commandProvider = new ValgrindCommandProvider(valgrindDebugTaskProvider);
   return [
     commands.registerCommand(
       'valgrind-task-integration.valgrindPid',

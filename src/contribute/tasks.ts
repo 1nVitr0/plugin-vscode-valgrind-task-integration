@@ -1,9 +1,13 @@
 import { tasks } from 'vscode';
-import { ValgrindTaskProvider, ValgrindTaskType } from '../tasks/ValgrindTaskProvider';
+import { ValgrindTaskProvider } from '../tasks/ValgrindTaskProvider';
+import { ValgrindDebugTaskProvider } from '../tasks/ValgrindDebugTaskProvider';
 
-export default function contributeTasks(valgrindTaskProvider: ValgrindTaskProvider) {
+export default function contributeTasks(
+  valgrindTaskProvider: ValgrindTaskProvider,
+  valgrindDebugTaskProvider: ValgrindDebugTaskProvider
+) {
   return [
-    tasks.registerTaskProvider(ValgrindTaskType.debugTask, valgrindTaskProvider),
-    tasks.registerTaskProvider(ValgrindTaskType.task, valgrindTaskProvider),
+    tasks.registerTaskProvider(valgrindTaskProvider.taskType, valgrindTaskProvider),
+    tasks.registerTaskProvider(valgrindDebugTaskProvider.taskType, valgrindDebugTaskProvider),
   ];
 }
