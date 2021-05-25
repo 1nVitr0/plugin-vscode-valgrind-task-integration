@@ -1,7 +1,7 @@
 {
   "name": "valgrind-task-integration",
   "displayName": "Valgrind Task Integration",
-  "description": "Integrate valgrind into vbscode tasks and launch config",
+  "description": "Integrate valgrind into vscode tasks and launch config",
   "author": "1nVitr0",
   "publisher": "1nVitr0",
   "repository": {
@@ -15,7 +15,7 @@
   },
   "categories": [
     "Debuggers",
-    "Testing",
+    "Programming Languages",
     "Other"
   ],
   "keywords": [
@@ -26,9 +26,14 @@
     "debug"
   ],
   "activationEvents": [
-    "*"
+    "onCommand:valgrind-task-integration.valgrindPid",
+    "onCommand:valgrind-task-integration.valgrindGdbArg",
+    "onCommand:workbench.action.tasks.runTask"
   ],
   "main": "./dist/extension.js",
+  "extensionDependencies": [
+    "ms-vscode.cmake-tools"
+  ],
   "contributes": {
     "commands": [
       {
@@ -99,6 +104,11 @@
         "applyTo": "allDocuments",
         "fileLocation": "absolute",
         "source": "valgrind",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^==\\d+== Using Valgrind-[\\d\\.]+",
+          "endsPattern": "^==\\d+== ERROR SUMMARY:"
+        },
         "pattern": [
           {
             "regexp": "^==\\d+== ((?:Invalid|Syscall param|Conditional jump or move|Mismatched|Source and destination overlap|Argument) .+)$",
@@ -111,6 +121,15 @@
             "loop": true
           }
         ]
+      },
+      {
+        "name": "valgrind-debug",
+        "base": "$valgrind",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^==\\d+== Using Valgrind-[\\d\\.]+",
+          "endsPattern": "^==\\d+== TO DEBUG THIS PROCESS"
+        }
       }
     ]
   },
