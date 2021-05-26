@@ -1,3 +1,8 @@
+[![Visual Studio Code extension 1nVitr0.valgrind-task-integration](https://vsmarketplacebadge.apphb.com/version/1nVitr0.valgrind-task-integration.svg)](https://marketplace.visualstudio.com/items?itemName=1nVitr0.valgrind-task-integration)
+[![Installs for Visual Studio Code extension 1nVitr0.valgrind-task-integration](https://vsmarketplacebadge.apphb.com/installs/1nVitr0.valgrind-task-integration.svg)](https://marketplace.visualstudio.com/items?itemName=1nVitr0.valgrind-task-integration)
+[![Rating for Visual Studio Code extension 1nVitr0.valgrind-task-integration](https://vsmarketplacebadge.apphb.com/rating/1nVitr0.valgrind-task-integration.svg)](https://marketplace.visualstudio.com/items?itemName=1nVitr0.valgrind-task-integration)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
 # Valgrind Task Integration
 
 Integrate valgrind into the default tasks / launch.json workflow in vscode!
