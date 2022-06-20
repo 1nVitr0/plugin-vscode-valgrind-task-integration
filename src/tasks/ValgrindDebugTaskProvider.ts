@@ -10,7 +10,7 @@ export class ValgrindDebugTaskProvider extends AbstractValgrindTaskProvider<Valg
 
   public async getPid(target: string): Promise<string | undefined> {
     return new Promise((resolve) => {
-      if (this.valgrindPids[target]) {
+      if (target in this.valgrindPids) {
         resolve(this.valgrindPids[target]);
       } else {
         const resolvePid = (pid: string) => {
