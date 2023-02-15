@@ -2,6 +2,7 @@
   "name": "valgrind-task-integration",
   "displayName": "Valgrind Task Integration",
   "description": "Integrate valgrind into vscode tasks and launch config",
+  "license": "MIT",
   "author": "1nVitr0",
   "publisher": "1nVitr0",
   "repository": {
